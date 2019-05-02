@@ -1,0 +1,28 @@
+# Create a pod that reads and writes to the
+# NFS server via an NFS volume.
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: pod-using-nfs
+spec:
+  # Add the server as an NFS volume for the pod
+  volumes:
+    - name: nfs-pv-storage
+      persistentVolumeClaim:
+       claimName: nfs-pv-claim
+
+  # Mount the NFS volume in the container and create nodejs script that reads the nfs
+  # file and prints it. Run the nodejs script in a loop
+  containers:
+    - name: app
+      image: node
+
+      # Mount the NFS volume in the container
+      volumeMounts:
+        - name: nfs-pv-storage
+          mountPath: /var/nfs
+
+      # Read the file inside the NFS server
+      command: ["/bin/bash", "-c", 
+        "echo \"const fs = require('fs'); console.log(fs.readFileSync('/var/nfs/index.txt', 'utf8'));\" > index.js && while true; do node index.js; sleep 5; done"]
