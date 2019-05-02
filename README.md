@@ -40,3 +40,8 @@ Hello from Kubernetes storage
 
 Hello from Kubernetes storage
 ```
+
+## References
+https://matthewpalmer.net/kubernetes-app-developer/articles/kubernetes-volumes-example-nfs-persistent-volume.html
+
+https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
